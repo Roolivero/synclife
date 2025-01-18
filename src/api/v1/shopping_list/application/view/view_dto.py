@@ -2,5 +2,5 @@ from dataclasses import dataclass
 
 
 @dataclass
-class DeleteDto:
+class ViewDto:
     shopping_list_id: str

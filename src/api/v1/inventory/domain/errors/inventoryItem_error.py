@@ -2,8 +2,9 @@ from enum import Enum
 
 from src.api.v1.inventory.domain.errors import InventoryError
 
-# TO DO: (LUCAS) REVISAR EL VALIDADOR DE AMOUNT, DICE MAYOR A CERO Y 
-# EN LA LOGICA PUSISTE AMOUNT < 0 
+# TO DO: (LUCAS) REVISAR EL VALIDADOR DE AMOUNT, DICE MAYOR A CERO Y
+# EN LA LOGICA PUSISTE AMOUNT < 0
+
 
 class InventoryItemTypeError(Enum):
     INVALID_PRODUCT_NAME = "El nombre del producto no puede estar vacio."

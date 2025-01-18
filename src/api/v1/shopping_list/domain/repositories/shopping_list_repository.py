@@ -1,10 +1,11 @@
 from abc import ABC, abstractmethod
 from typing import List, Optional, Tuple
 
-from src.api.v1.shopping_list.domain.entities.shopping_list import ShoppingList
 from src.api.v1.shared.domain.value_objects import Uuid
+from src.api.v1.shopping_list.domain.entities.shopping_list import ShoppingList
 
-class ShoppingListRespository(ABC): 
+
+class ShoppingListRespository(ABC):
     @abstractmethod
     def find_all(self) -> List[ShoppingList]:
         pass

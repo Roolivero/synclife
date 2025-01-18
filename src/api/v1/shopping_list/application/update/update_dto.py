@@ -2,5 +2,7 @@ from dataclasses import dataclass
 
 
 @dataclass
-class DeleteDto:
+class UpdateDto:
     shopping_list_id: str
+    product_name: str
+    amount: int

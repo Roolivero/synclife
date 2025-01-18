@@ -1,12 +1,18 @@
-from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_notes_model import (
-    SqlModelNotesModel,
+from typing import List
+
+from fastapi import HTTPException
+
+from src.api.v1.notes.application.note.create_note import CreateNoteUseCase
+from src.api.v1.notes.application.note.delete_note import DeleteNoteUseCase
+from src.api.v1.notes.application.note.delete_note.delete_note_dto import DeleteNoteDTO
+from src.api.v1.notes.application.note.update_note import UpdateNoteUseCase
+from src.api.v1.notes.application.note.view_all_notes import ViewAllNotesUseCase
+from src.api.v1.notes.application.note.view_all_notes.view_all_dto import (
+    ViewAllNotesDTO,
 )
-from src.api.v1.notes.infrastructure.persistence.repositories.sqlmodel_notes_repository import (  # noqa: E501
-    SQLModelNotesRepository,
-)
-from src.api.v1.user.infrastructure.persistence.repositories.sqlmodel_user_repository import (  # noqa: E501
-    SqlModelUserRepository,
-)
+from src.api.v1.notes.application.note.view_note import ViewNoteUseCase
+from src.api.v1.notes.application.note.view_note.view_note_dto import ViewNoteDTO
+from src.api.v1.notes.domain.errors import NotesError, NotesTypeError
 from src.api.v1.notes.infrastructure.http.dtos.notes import (
     PydanticCreateNoteRequestDto,
     PydanticCreateNoteResponseDto,
@@ -15,24 +21,21 @@ from src.api.v1.notes.infrastructure.http.dtos.notes import (
     PydanticUpdateNotesResponseDto,
     PydanticViewNotesResponseDto,
 )
-from src.api.v1.notes.application.note.create_note import CreateNoteUseCase
-from src.api.v1.notes.application.note.delete_note import DeleteNoteUseCase
-from src.api.v1.notes.application.note.update_note import UpdateNoteUseCase
-from src.api.v1.notes.application.note.view_note import ViewNoteUseCase
-from src.api.v1.notes.application.note.view_all_notes import ViewAllNotesUseCase
-from src.api.v1.notes.application.note.delete_note.delete_note_dto import DeleteNoteDTO
-from src.api.v1.notes.application.note.view_note.view_note_dto import ViewNoteDTO
-from src.api.v1.notes.application.note.view_all_notes.view_all_dto import (
-    ViewAllNotesDTO,
+from src.api.v1.notes.infrastructure.persistence.models.sqlmodel_notes_model import (
+    SqlModelNotesModel,
 )
-from src.api.v1.notes.domain.errors import NotesError, NotesTypeError
+from src.api.v1.notes.infrastructure.persistence.repositories.sqlmodel_notes_repository import (  # noqa: E501
+    SQLModelNotesRepository,
+)
+from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.user.infrastructure.http.services.in_memory_session_service import (
     InMemorySessionService,
 )
-from src.api.v1.shared.domain.value_objects import Uuid
+from src.api.v1.user.infrastructure.persistence.repositories.sqlmodel_user_repository import (  # noqa: E501
+    SqlModelUserRepository,
+)
+
 from .exception_handler import handle_exceptions
-from fastapi import HTTPException
-from typing import List
 
 
 class FastApiNotesController:

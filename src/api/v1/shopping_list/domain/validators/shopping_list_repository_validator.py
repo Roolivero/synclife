@@ -1,13 +1,14 @@
 from typing import Optional
 
+from src.api.v1.shared.domain.value_objects import Uuid
 from src.api.v1.shopping_list.domain.entities.shopping_list import ShoppingList
 from src.api.v1.shopping_list.domain.errors import (
-    ShoppingListError,
+    ShoppingListValidationError,
     ShoppingListValidationTypeError,
 )
-
-from src.api.v1.shopping_list.domain.repositories.shopping_list_repository import ShoppingListRespository
-from src.api.v1.shared.domain.value_objects import Uuid
+from src.api.v1.shopping_list.domain.repositories.shopping_list_repository import (
+    ShoppingListRespository,
+)
 
 
 class ShoppingListRepositoryValidator:
@@ -16,7 +17,9 @@ class ShoppingListRepositoryValidator:
         shopping_list: Optional[ShoppingList],
     ) -> ShoppingList:
         if shopping_list is None:
-            raise ShoppingListError(ShoppingListValidationTypeError.ITEM_NOT_FOUND)
+            raise ShoppingListValidationError(
+                ShoppingListValidationTypeError.ITEM_NOT_FOUND
+            )
         return shopping_list
 
     @staticmethod
@@ -25,7 +28,8 @@ class ShoppingListRepositoryValidator:
         user_id: Uuid,
         shopping_list_id: Uuid,
     ) -> None:
-
         shopping_list = repository.find_by_id(shopping_list_id)
         if shopping_list is None or shopping_list.user_id != user_id:
-            raise ShoppingListError(ShoppingListValidationTypeError.ITEM_NOT_OWNED)
+            raise ShoppingListValidationError(
+                ShoppingListValidationTypeError.ITEM_NOT_OWNED
+            )
